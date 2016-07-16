@@ -1,28 +1,55 @@
-# Getting and Cleaning Data Project
-This is the course project for Getting and Clearning Data. 
+# README For Getting and Cleaning Data Project
 
-## Data Preparation
-* Download the raw data set from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
-* Unzip the downloaded zip file into the git local repo directory: a folder called UCI HAR Dataset should appear in the same folder as the script file run_analysis.R
+This document describes the R script inside run_analysis.R for the course project.
 
-## R Script 
-The R script is a called run_analysis.R, which should be downloaded to the same folder where folder UCI HAR Dataset is located.
+The script run_analysis.R include the following sections:
+* Environment Setting
+* Data Loading
+* Descriptive Columns & Rows
+* Merging Columns And Rows
+* Filtering & Melting Data Sets
+* Summary & Output
 
-## Run run_analysis.R
-With R Studio, open the script file run_analysis.R and edit the working directory by changing the first command setwd() 
-Once the working directory is correctly set, source the script run_analysis.R
-A tidy data file tidy_data.txt will be generated once the script run_analysis.R is completed, which has the average measurement of each variable for each subject and each activity.
-Data frame df_tidied is also a tidy data set which include the following attributes:
-* act_id: Activity ID
-* subject: Subject ID
-* variable: The feature function (only features with mean and std functions are included)
-* value: the measurement of variable (feature)
-* activity_label: Name of Activity
+## Environment Setting
+The script will automatically set the working directory to the same directory as run_analysis.R. Please make sure the data directory UCI HAR Dataset is located
+in the same directory as run_analysis.R. Otherwise, an error message will appear.
 
-## Output file: tidy_data.txt
-This is the output file using write.table function with row.names=FALSE, showing the average of each variable for each activity and each subject. The following columns are included in this file:
-* Subject
-* Activity Label
-* Variable
-* Average
+It also load required libraries: reshape2 and dplyr.
+
+## Data Loading
+The following txt files are loaded into relevant data frames with read.table. Data frame names are the same as the file names but extensions.
+* ./UCI HAR Dataset/activity_labels.txt
+* ./UCI HAR Dataset/features.txt
+
+* ./UCI HAR Dataset/test/X_test.txt
+* ./UCI HAR Dataset/test/Y_test.txt
+* ./UCI HAR Dataset/test/subject_test.txt
+
+* ./UCI HAR Dataset/train/X_train.txt
+* ./UCI HAR Dataset/train/Y_train.txt
+* ./UCI HAR Dataset/train/subject_train.txt
+
+For example: features.txt is loaded into data frame features by
+  features <- read.table("./UCI HAR Dataset/features.txt")
+
+## Descriptive Columns Names
+Descriptive columns names are assigned to columns in various data frames by using names() function.
+For X_test and X_train data frames, the columns are mapping to features$feature. There are 561 features in total.
+
+## Merging Columns And Rows
+For test data, we need to combine the columns from subject(subject_test), activity(Y_test) and measurements (X_test) into one data frame called df_test.
+Similarly, df_train is created for train data by combining columns from the three raw data frames.
+
+Then, the two newly created data frames (df_test and df_train) are combined using rbind to form a unified data frame df_merged.
+
+## Filtering & Melting Data Sets
+As we are only interested in the mean and standard deviation features, we identify those features using regular expression against the features$feature vector
+to form a vector of characters, called selected_features to be usedin melt function as measure.vars. Then we apply the melt function on df_merged data frame selecting subject and act_id as IDs
+and selected_features as the vector for measure.vars.
+
+Finally we join the melted data frame (df_melted) with activity_labels to use the descriptive activity labels for the tidy data set (df_tidied).
+
+## Summary & Output
+By using group_by function from dplyr package, we can get the average of each variable for each subject and each activity into the output data frame.
+Before we write the output data frame to text file, we can also finalise the output columns names with names() function.
 
