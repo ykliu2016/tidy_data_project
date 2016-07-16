@@ -1,9 +1,12 @@
+# set working directory to the folder where run_analysis.R and the unzipped data set (folder UCI HAR Dataset) is 
+# change this line before your source the script
+setwd("~/Documents/Data Scientiest_Course/Select Data/tidy_data_project/")
+
+
 # Load required libaries
 library(reshape2)
 library(dplyr)
 
-# set current directory as working directory
-setwd("./")
 # read raw data into R data frames
 # activity_labels: data frame for unqiue activity labels
 # features: data frame for unique features (variables)
