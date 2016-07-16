@@ -11,15 +11,15 @@ The script run_analysis.R include the following sections:
 
 ## Environment Setting
 Before sourcing run_analysis.R, one should check the working directory is set to the folder where the script itself and the data folder (UCI HAR Dataset) are.
-e.g. 
-MacBook-Air:tidy_data_project kurtliu$ ls -lh
-total 1344
--rw-r--r--  1 kurtliu  staff   1.5K 16 Jul 22:26 README.md
-drwxr-xr-x  8 kurtliu  staff   272B 16 Jul 22:01 UCI HAR Dataset
--rw-r--r--  1 kurtliu  staff   3.2K 16 Jul 22:43 run_analysis.R
--rw-r--r--  1 kurtliu  staff   661K 16 Jul 22:17 tidy_data.txt
+e.g.   
+MacBook-Air:tidy_data_project kurtliu$ ls -lh  
+total 1344  
+-rw-r--r--  1 kurtliu  staff   1.5K 16 Jul 22:26 README.md  
+drwxr-xr-x  8 kurtliu  staff   272B 16 Jul 22:01 UCI HAR Dataset  
+-rw-r--r--  1 kurtliu  staff   3.2K 16 Jul 22:43 run_analysis.R  
+-rw-r--r--  1 kurtliu  staff   661K 16 Jul 22:17 tidy_data.txt  
 
-It also load required libraries: reshape2 and dplyr.
+It also load required libraries: reshape2 and dplyr.  
 
 ## Data Loading
 The following txt files are loaded into relevant data frames with read.table. Data frame names are the same as the file names but extensions.
@@ -57,5 +57,19 @@ Finally we join the melted data frame (df_melted) with activity_labels to use th
 ## Summary & Output
 By using group_by function from dplyr package, we can get the average of each variable for each subject and each activity into the output data frame.
 Before we write the output data frame to text file, we can also finalise the output columns names with names() function.
+
+## Data Frames & Column Descriptions
+output: 
+* Subject : Subject is used to identify the person performing the activities
+* Activity Label : The name of the activity 
+* Variable : Either the mean or standard deviation functions of each measurement
+* Average : The average of each variable for each subject and each activity
+
+df_tidied: 
+* act_id : activity ID
+* subject : subject id
+* variable : Either the mean or standard deviation functions of each measurement
+* value : The measurement of each variable observed with each subject and activity
+* activity_label : The name of the activity 
 
  
