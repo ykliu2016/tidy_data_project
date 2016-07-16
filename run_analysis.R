@@ -1,3 +1,4 @@
+# Step 1: Environment Setting
 # set working directory to the folder where run_analysis.R and the unzipped data set (folder UCI HAR Dataset) is 
 # change this line before your source the script
 setwd("~/Documents/Data Scientiest_Course/Select Data/tidy_data_project/")
@@ -7,6 +8,7 @@ setwd("~/Documents/Data Scientiest_Course/Select Data/tidy_data_project/")
 library(reshape2)
 library(dplyr)
 
+# Step 2: Data Loading
 # read raw data into R data frames
 # activity_labels: data frame for unqiue activity labels
 # features: data frame for unique features (variables)
@@ -32,6 +34,7 @@ X_train <- read.table("./UCI HAR Dataset/train/X_train.txt")
 Y_train <- read.table("./UCI HAR Dataset/train/Y_train.txt")
 subject_train <- read.table("./UCI HAR Dataset/train/subject_train.txt")
 
+# Step 3: Descriptive Column Names
 # set descriptive columns names for data frames
 names(activity_labels) <- c("act_id", "activity_label")
 names(features) <- c("feature_id", "feature")
@@ -45,6 +48,7 @@ names(subject_train) <- "subject"
 names(X_test) <- features$feature
 names(X_train) <- features$feature
 
+# Step 4: Merging Columns And Rows
 # merge the relevant columns for test and train data sets respectively
 df_test <- cbind(subject_test, Y_test, X_test)
 df_train <- cbind(subject_train, Y_train, X_train)
@@ -52,6 +56,7 @@ df_train <- cbind(subject_train, Y_train, X_train)
 # merge the test and train data sets
 df_merged <- rbind(df_test, df_train) 
 
+# Step 5: Filtering & Melting Data Sets
 # define the list of features to be selected for melting/extracting, e.g. all mean and standard deviation measurements.  
 selected_features <- as.character(features[grep("(mean|std)\\(", features$feature),]$feature)
 
@@ -62,7 +67,7 @@ df_melted <- melt(df_merged, id=c("subject", "act_id"), measure.vars=selected_fe
 # df_tidied is the tidied data set for step 4
 df_tidied <- merge(df_melted, activity_labels, by = "act_id")
 
-# step 5: group the tidied data set by subject, activity_label and variable
+# Step 6: Summary & Output
 grp <- group_by(df_tidied, subject, activity_label, variable)
 
 # final output data set: the average of each variable for each activity and each subject
