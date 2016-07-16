@@ -10,14 +10,8 @@ The script run_analysis.R include the following sections:
 * Summary & Output
 
 ## Environment Setting
-Before sourcing run_analysis.R, one should check the working directory is set to the folder where the script itself and the data folder (UCI HAR Dataset) are.
-e.g.   
-MacBook-Air:tidy_data_project kurtliu$ ls -lh  
-total 1344  
--rw-r--r--  1 kurtliu  staff   1.5K 16 Jul 22:26 README.md  
-drwxr-xr-x  8 kurtliu  staff   272B 16 Jul 22:01 UCI HAR Dataset  
--rw-r--r--  1 kurtliu  staff   3.2K 16 Jul 22:43 run_analysis.R  
--rw-r--r--  1 kurtliu  staff   661K 16 Jul 22:17 tidy_data.txt  
+The script will automatically set the working directory to the same directory as run_analysis.R. Please make sure the data directory UCI HAR Dataset is located 
+in the same directory as run_analysis.R. Otherwise, an error message will appear.
 
 It also load required libraries: reshape2 and dplyr.  
 

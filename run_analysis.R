@@ -1,8 +1,10 @@
 # Step 1: Environment Setting
-# set working directory to the folder where run_analysis.R and the unzipped data set (folder UCI HAR Dataset) is 
-# change this line before your source the script
-setwd("~/Documents/Data Scientiest_Course/Select Data/tidy_data_project/")
+# set working directory to the folder where run_analysis.R is 
+# It assumes the UCI HAR Data is unzipped into a folder called <UCI HAR Dataset> which is located in the same directory as run_analysis.R
+wdir <- dirname(sys.frame(1)$ofile)
+setwd(wdir)
 
+if (!dir.exists(file.path(wdir, "./UCI HAR Dataset"))) stop("Folder <UCI HAR Dataset> is not found in the same directory as run_analysis.R.")
 
 # Load required libaries
 library(reshape2)
