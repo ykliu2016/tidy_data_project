@@ -15,6 +15,8 @@ if (!dir.exists(file.path(wdir, "./UCI HAR Dataset"))) {
         unzip("./Dataset.zip", exdir = "./")
 }
 
+if (!dir.exists(file.path(wdir, "./UCI HAR Dataset"))) stop("Data is not ready.")
+
 # Step 2: Data Loading
 # read raw data into R data frames
 # activity_labels: data frame for unqiue activity labels

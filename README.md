@@ -7,12 +7,12 @@ The script run_analysis.R include the following sections:
 * Data Loading
 * Descriptive Columns & Rows
 * Merging Columns And Rows
-* Filtering & Melting Data Sets
+* Filtering Data Set
 * Summary & Output
 
 ## Environment Setting
 The script will automatically set the working directory to the same directory as run_analysis.R. Please make sure the data directory UCI HAR Dataset is located
-in the same directory as run_analysis.R. Otherwise, an error message will appear.
+in the same directory as run_analysis.R. If the data is not ready, the script will download it and unzip the data into the working directory. 
 
 It also load required libraries: reshape2 and dplyr.
 
@@ -34,7 +34,10 @@ For example: features.txt is loaded into data frame features by
 
 ## Descriptive Columns Names
 Descriptive columns names are assigned to columns in various data frames by using names() function.
-For X_test and X_train data frames, the columns are mapping to features$feature. There are 561 features in total.
+
+Column feature_label is added to features data frame to provide descriptive names for variables. 
+
+For X_test and X_train data frames, the columns are mapped to features$feature_label. There are 561 features/variables in total.
 
 ## Merging Columns And Rows
 For test data, we need to combine the columns from subject(subject_test), activity(Y_test) and measurements (X_test) into one data frame called df_test.
@@ -42,14 +45,14 @@ Similarly, df_train is created for train data by combining columns from the thre
 
 Then, the two newly created data frames (df_test and df_train) are combined using rbind to form a unified data frame df_merged.
 
-## Filtering & Melting Data Sets
+## Filtering Data Set
 As we are only interested in the mean and standard deviation features, we identify those features using regular expression against the features$feature vector
-to form a vector of characters, called selected_features to be usedin melt function as measure.vars. Then we apply the melt function on df_merged data frame selecting subject and act_id as IDs
-and selected_features as the vector for measure.vars.
+to form a vector of characters, called selected_features to be used for filtering resulting columns. 
 
-Finally we join the melted data frame (df_melted) with activity_labels to use the descriptive activity labels for the tidy data set (df_tidied).
+Finally we join the filtered data frame (df_selected) with activity_labels to use the descriptive activity labels for the tidy data set (df_tidied).
 
 ## Summary & Output
-By using group_by function from dplyr package, we can get the average of each variable for each subject and each activity into the output data frame.
-Before we write the output data frame to text file, we can also finalise the output columns names with names() function.
+By using group_by function from dplyr package and summerise_each, we can get the average of each variable for each subject and each activity into the output data frame.
+
+The final output data frame is written to the tidy_data.txt using write.table function.
 
